@@ -7,7 +7,6 @@ import (
 	"github.com/slack-go/slack"
 	"github.com/slack-go/slack/socketmode"
 	"slackbot/config"
-	"slackbot/models"
 	"slackbot/handlers"
 )
 
