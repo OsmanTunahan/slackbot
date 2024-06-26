@@ -8,6 +8,7 @@ import (
 	"github.com/slack-go/slack/socketmode"
 	"slackbot/config"
 	"slackbot/models"
+	"slackbot/handlers"
 )
 
 func init() {
@@ -21,4 +22,16 @@ func main() {
 
 	c, cancel := context.WithCancel(context.Background())
 	defer cancel()
+
+	eg.Go(func() error {
+		handlers.HandleEvents(c, client)
+		return nil
+	})
+	eg.Go(func() error {
+		return client.Run()
+	})
+
+	if err := eg.Wait(); err != nil {
+		log.Fatal(err)
+	}
 }
